@@ -1,0 +1,72 @@
+{% extends "base.html" %}
+{% block content %}
+
+    <!--Load the AJAX API-->
+    <script type="text/javascript" src="https://www.google.com/jsapi"></script>
+    <script type="text/javascript">
+
+       var query = document.URL;
+       var qtype = query.split("/");
+       var query_type = (qtype[qtype.length-1]);
+
+      // Load the Visualization API and the controls package.
+      google.load('visualization', '1.0', {'packages':['controls']});
+
+      // Set a callback to run when the Google Visualization API is loaded.
+      google.setOnLoadCallback(drawDashboard);
+
+      // Callback that creates and populates a data table,
+      // instantiates a dashboard, a range slider and a pie chart,
+      // passes in the data and draws it.
+      function drawDashboard() {
+
+        // Create our data table.
+        var data = google.visualization.arrayToDataTable([
+             ['Teams', query_type, 'Year'],
+          {% for result in chart_query %}
+            ['{{ result.team_name }}', {{ result.total }}, {{ result.date }}],
+          {% endfor %}
+        ]);
+
+        // Create a dashboard.
+        var dashboard = new google.visualization.Dashboard(
+            document.getElementById('dashboard_div'));
+
+        // Create a range slider, passing some options
+        var yearRangeSlider = new google.visualization.ControlWrapper({
+          'controlType': 'NumberRangeFilter',
+          'containerId': 'filter_div',
+          'options': {
+            'filterColumnLabel': 'Year'
+          }
+        });
+
+        // Create a pie chart, passing some options
+        var Chart = new google.visualization.ChartWrapper({
+          'chartType': 'ColumnChart',
+          'containerId': 'chart_div',
+          'options': {
+            'height': 600,
+            'legend': 'right'
+          }
+        });
+
+        // Establish dependencies, declaring that 'filter' drives 'pieChart',
+        // so that the pie chart will only display entries that are let through
+        // given the chosen slider range.
+        dashboard.bind(yearRangeSlider, Chart);
+
+        // Draw the dashboard.
+        dashboard.draw(data);
+      }
+    </script>
+
+
+  
+    <!--Div that will hold the dashboard-->
+    <div id="dashboard_div">
+      <!--Divs that will hold each control and chart-->
+      <div id="filter_div"></div>
+      <div id="chart_div"></div>
+    </div>
+{% endblock %}

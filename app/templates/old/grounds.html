@@ -1,0 +1,10 @@
+<!-- extend base layout -->
+{% extends "base.html" %}
+{% block content %}
+  <h2>Grounds</h2>
+  {% for v in venues %}
+  <p>
+    {{ v.venue_name }}
+  </p>
+  {% endfor %}
+{% endblock %}

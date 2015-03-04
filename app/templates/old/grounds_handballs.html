@@ -1,0 +1,41 @@
+{% extends "base.html" %}
+{% block content %}
+
+    <!--Load the AJAX API-->
+    <script type="text/javascript" src="https://www.google.com/jsapi"></script>
+    <script type="text/javascript">
+
+      // Load the Visualization API and the piechart package.
+      google.load('visualization', '1.0', {'packages':['corechart']});
+
+      // Set a callback to run when the Google Visualization API is loaded.
+      google.setOnLoadCallback(drawVisualization);
+
+      function drawVisualization() {
+        var data = google.visualization.arrayToDataTable([
+          ['Avg handballs', 'Grounds'],
+          {% for gk in ghandballs %}
+            ['{{ gk.venue_name }}', {{ gk.total_handballs }}],
+          {% endfor %}
+        ]);
+        // Set chart options
+            var options = {
+            title : 'Average handballs by ground',
+            vAxis: {title: "handballs"},
+            hAxis: {title: "grounds"},
+            seriesType: "bars"
+          };
+
+
+        // Instantiate and draw our chart, passing in some options.
+        var chart = new google.visualization.ColumnChart(document.getElementById('chart_div'));
+        chart.draw(data, options);
+      }
+    </script>
+
+
+
+<h3>AVG handballs for each Ground</h3>
+<div id="chart_div" style="height: 600px;"></div>
+
+{% endblock %}
