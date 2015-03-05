@@ -24,6 +24,11 @@ def teams_charts(query_type):
     chart_query = db.session.query(func.avg(getattr(stats, query_type)).label("total"), teams.team_name).join(teams).filter((teams.team_id == stats.team_id)).filter(getattr(stats, query_type) > 0).group_by(teams.team_name)
     return render_template('teams_charts.html', chart_query = chart_query)
 
+@app.route('/year_charts/<query_type>')
+def teams_charts(query_type):
+    #select AVG(stats.tackles), teams.team_name, strftime('%Y', games.date) as Year from stats, games, teams where stats.game_id = games.game_id AND stats.team_id = teams.team_id GROUP BY teams.team_name,Year
+    return render_template('year_charts.html', chart_query = chart_query)
+
 @app.route('/teams/<query_type>')
 def teams_dash(query_type):
     chart_query = db.session.query(func.avg(getattr(stats, query_type)).label("total"), teams.team_name, games.date).join(teams, games.game_id==stats.game_id).filter((teams.team_id == stats.team_id)).group_by(teams.team_name)
