@@ -1,0 +1,11 @@
+<!-- extend base layout -->
+{% extends "base.html" %}
+{% block content %}
+  <h2>Grounds</h2>
+  {% for m in menu %}
+  <p>
+    {{ m.name }}
+    {{ m.type }}
+  </p>
+  {% endfor %}
+{% endblock %}

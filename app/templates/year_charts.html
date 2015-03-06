@@ -1,0 +1,56 @@
+{% extends "base.html" %}
+{% block content %}
+
+    <!--Load the AJAX API-->
+    <script type="text/javascript" src="https://www.google.com/jsapi"></script>
+    <script type="text/javascript">
+
+
+       var query = document.URL;
+       var qtype = query.split("/");
+       var query_type = (qtype[qtype.length-1]);
+
+
+      // Load the Visualization API and the piechart package.
+      google.load('visualization', '1.1', {'packages':['bar']});
+
+      // Set a callback to run when the Google Visualization API is loaded.
+      google.setOnLoadCallback(drawVisualization);
+
+      function drawVisualization() {
+        var data = google.visualization.arrayToDataTable([
+          ['Year', 
+          {% for result in chart_query %}
+            '{{ result.date }}',
+          {% endfor %}
+          ],
+          [query_type,
+           {% for result in chart_query %}
+            {{ result.total }},
+          {% endfor %}
+          ]
+
+
+        ]);
+        // Set chart options
+            var options = {
+              chart: {
+                title : 'Average ' + query_type + ' by team',
+                vAxis: {title: "kicks"},
+                hAxis: {title: "grounds"}
+              }
+            };
+
+
+        // Instantiate and draw our chart, passing in some options.
+        var chart = new google.charts.Bar(document.getElementById('chart_div'));
+        //chart.draw(data, google.charts.Column.convertOptions(options));
+        chart.draw(data, options);
+      }
+    </script>
+
+
+
+<div id="chart_div" style="height: 950px;"></div>
+
+{% endblock %}

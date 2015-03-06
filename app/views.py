@@ -25,7 +25,8 @@ def teams_charts(query_type):
     return render_template('teams_charts.html', chart_query = chart_query)
 
 @app.route('/year_charts/<query_type>')
-def teams_charts(query_type):
+def year_charts(query_type):
+    chart_query = db.session.query(getattr(stats, query_type), teams.team_name, games.date).filter(stats.game_id == games.game_id).filter(stats.team_id == teams.team_id)
     #select AVG(stats.tackles), teams.team_name, strftime('%Y', games.date) as Year from stats, games, teams where stats.game_id = games.game_id AND stats.team_id = teams.team_id GROUP BY teams.team_name,Year
     return render_template('year_charts.html', chart_query = chart_query)
 
