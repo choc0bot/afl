@@ -8,7 +8,11 @@
 
        var query = document.URL;
        var qtype = query.split("/");
-       var query_type = (qtype[qtype.length-1]);
+       var base_url = qtype[0] + '//' +qtype[1]+ '/' +qtype[2]+ '/' +qtype[3];
+       var query_type = (qtype[qtype.length-3]);
+       var minyear = (qtype[qtype.length-2]);
+       var maxyear = (qtype[qtype.length-1]);
+       var link = base_url+'/'+minyear+'/'+maxyear;
 
 
   $(function() {
@@ -16,14 +20,29 @@
       range: true,
       min: 1987,
       max: 2014,
-      values: [ 1987, 2014 ],
+      values: [ minyear, maxyear ],
       slide: function( event, ui ) {
         $( "#amount" ).val( "Average " + query_type + " by ground from " + ui.values[ 0 ] + " to " + ui.values[ 1 ] );
-      }
+        //$("#dabutton").text('Filter '+ui.values[0]+' to '+ui.values[1]);
+
+      },
+
+    stop: function(event, ui) {
+                minyear=ui.values[0];
+                maxyear=ui.values[1];
+            }
+
     });
     $( "#amount" ).val( "Average " + query_type + " by ground from " + $( "#slider-range" ).slider( "values", 0 ) +
       " to " + $( "#slider-range" ).slider( "values", 1 ) );
   });
+
+  function addURL(element)
+{
+    $(element).attr('href', function() {
+        return base_url +'/'+ query_type +'/'+ minyear+'/'+ maxyear;
+    });
+}
 
 
       // Load the Visualization API and the piechart package.
@@ -72,7 +91,10 @@
  
 <div id="slider-range" style="width: 400px; margin:0px 50px"></div>
 </br>
+<a onclick="javascript:addURL(this);" href="./">Click this</a>
 
+<a class="btn btn-default" id="dabutton" style="width: 400px; margin:0px 50px" href="./">FILTER</a>
+</br>
 <div id="chart_div" style="height: 950px;"></div>
 
 {% endblock %}

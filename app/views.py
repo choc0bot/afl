@@ -14,9 +14,17 @@ def grounds():
     ground = venues.query.order_by(venues.venue_name)
     return render_template('grounds.html', venues = ground)
 
-@app.route('/grounds_charts/<query_type>')
-def grounds_charts(query_type):
-    chart_query = db.session.query(func.avg(getattr(stats, query_type)).label("total"), venues.venue_name).join(games, venues).filter((games.game_id == stats.game_id)).filter(getattr(stats, query_type) > 0).group_by(venues.venue_name)
+# OLD GROUNDS QUERY
+#@app.route('/grounds_charts/<query_type>')
+#def grounds_charts(query_type):
+#    chart_query = db.session.query(func.avg(getattr(stats, query_type)).label("total"), venues.venue_name).join(games, venues).filter((games.game_id == stats.game_id)).filter(getattr(stats, query_type) > 0).group_by(venues.venue_name)
+#    return render_template('grounds_charts.html', chart_query = chart_query)
+
+@app.route('/grounds_charts/<query_type>/<min_year>/<max_year>')
+def grounds_charts(query_type,min_year,max_year):
+    min_year = min_year + '-01-01'
+    max_year = max_year + '-12-12'
+    chart_query = db.session.query(func.avg(getattr(stats, query_type)).label("total"), venues.venue_name).join(games, venues).filter((games.game_id == stats.game_id)).filter(getattr(stats, query_type) > 0).filter(games.date >= min_year).filter(games.date <= max_year).group_by(venues.venue_name)
     return render_template('grounds_charts.html', chart_query = chart_query)
 
 @app.route('/teams_charts/<query_type>')
@@ -26,7 +34,7 @@ def teams_charts(query_type):
 
 @app.route('/year_charts/<query_type>')
 def year_charts(query_type):
-    chart_query = db.session.query(getattr(stats, query_type), teams.team_name, games.date).filter(stats.game_id == games.game_id).filter(stats.team_id == teams.team_id)
+    chart_query = db.session.query(func.avg(getattr(stats, query_type)).label("total"), func.strftime('%Y', games.date).label("Year")).join(games).filter(stats.game_id == games.game_id).group_by("Year")
     #select AVG(stats.tackles), teams.team_name, strftime('%Y', games.date) as Year from stats, games, teams where stats.game_id = games.game_id AND stats.team_id = teams.team_id GROUP BY teams.team_name,Year
     return render_template('year_charts.html', chart_query = chart_query)
 
