@@ -49,21 +49,21 @@
             <li class="dropdown">
               <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Stats by Ground<span class="caret"></span></a>
               <ul class="dropdown-menu" role="menu">
-                <li><a href="../grounds_charts/kicks">Kicks</a></li>
-                <li><a href="../grounds_charts/handballs">Handballs</a></li>
-                <li><a href="../grounds_charts/disposals">Disposals</a></li>
-                <li><a href="../grounds_charts/marks">Marks</a></li>
-                <li><a href="../grounds_charts/tackles">Tackles</a></li>
-                <li><a href="../grounds_charts/hitouts">Hitouts</a></li>
-                <li><a href="../grounds_charts/frees_for">Frees for</a></li>
-                <li><a href="../grounds_charts/frees_against">Frees against</a></li>
-                <li><a href="../grounds_charts/goals_kicked">Goals kicked</a></li>
-                <li><a href="../grounds_charts/behinds_kicked">Behinds kicked</a></li>
-                <li><a href="../grounds_charts/behinds_rushed">Behinds rushed</a></li>
-                <li><a href="../grounds_charts/scoring_shots">Scoring shots</a></li>
-                <li><a href="../grounds_charts/inside_50s">Inside 50s</a></li>
-                <li><a href="../grounds_charts/in50s_score">Inside 50s score</a></li>
-                <li><a href="../grounds_charts/in50s_goal">Inside 50s goal</a></li>
+                <li><a href="{{ url_for('grounds_charts', query_type='kicks', min_year='1987', max_year='2014') }}">Kicks</a></li>
+                <li><a href="{{ url_for('grounds_charts', query_type='handballs', min_year='1987', max_year='2014') }}">Handballs</a></li>
+                <li><a href="{{ url_for('grounds_charts', query_type='disposals', min_year='1987', max_year='2014') }}">Disposals</a></li>
+                <li><a href="{{ url_for('grounds_charts', query_type='marks', min_year='1987', max_year='2014') }}">Marks</a></li>
+                <li><a href="{{ url_for('grounds_charts', query_type='tackles', min_year='1987', max_year='2014') }}">Tackles</a></li>
+                <li><a href="{{ url_for('grounds_charts', query_type='hitouts', min_year='1987', max_year='2014') }}">Hitouts</a></li>
+                <li><a href="{{ url_for('grounds_charts', query_type='frees_fors', min_year='1987', max_year='2014') }}">Frees for</a></li>
+                <li><a href="{{ url_for('grounds_charts', query_type='frees_against', min_year='1987', max_year='2014') }}">Frees against</a></li>
+                <li><a href="{{ url_for('grounds_charts', query_type='goals_kicked', min_year='1987', max_year='2014') }}">Goals kicked</a></li>
+                <li><a href="{{ url_for('grounds_charts', query_type='behinds_kicked', min_year='1987', max_year='2014') }}">Behinds kicked</a></li>
+                <li><a href="{{ url_for('grounds_charts', query_type='behinds_rushed', min_year='1987', max_year='2014') }}">Behinds rushed</a></li>
+                <li><a href="{{ url_for('grounds_charts', query_type='scoring_shots', min_year='1987', max_year='2014') }}">Scoring shots</a></li>
+                <li><a href="{{ url_for('grounds_charts', query_type='inside_50s', min_year='1987', max_year='2014') }}">Inside 50s</a></li>
+                <li><a href="{{ url_for('grounds_charts', query_type='in50s_score', min_year='1987', max_year='2014') }}">Inside 50s score</a></li>
+                <li><a href="{{ url_for('grounds_charts', query_type='in50s_goal', min_year='1987', max_year='2014') }}">Inside 50s goal</a></li>
                 <li class="divider"></li>
                 <li class="dropdown-header">Nav header</li>
                 <li><a href="#">Separated link</a></li>
