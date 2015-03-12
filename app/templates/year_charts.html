@@ -19,26 +19,16 @@
 
       function drawVisualization() {
         var data = google.visualization.arrayToDataTable([
-          ['Year', 
-          {% for result in chart_query %}
-            '{{ result.Year }}',
-          {% endfor %}
-          ],
-          [query_type,
-           {% for result in chart_query %}
-            {{ result.total }},
-          {% endfor %}
-          ]
-
-
-        ]);
+          ['Year', query_type],
+          {% for result in chart_query %}['{{ result.Year }}',{{ result.total }}],{% endfor %}
+            ]);
         // Set chart options
             var options = {
               chart: {
-                title : 'Average ' + query_type + ' by team',
-                vAxis: {title: "kicks"},
-                hAxis: {title: "grounds"}
-              }
+                title : 'Average ' + query_type + ' by year',
+                trendlines: { 0: {} }
+              },
+                legend: { position: 'none' }
             };
 
 
@@ -51,6 +41,6 @@
 
 
 
-<div id="chart_div"></div>
+<div id="chart_div" style="width: 90%; height: 80%; margin: 10px"></div>
 
 {% endblock %}
