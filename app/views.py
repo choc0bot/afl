@@ -21,6 +21,12 @@ def grounds():
 #def grounds_charts(query_type):
 #    chart_query = db.session.query(func.avg(getattr(stats, query_type)).label("total"), venues.venue_name).join(games, venues).filter((games.game_id == stats.game_id)).filter(getattr(stats, query_type) > 0).group_by(venues.venue_name)
 #    return render_template('grounds_charts.html', chart_query = chart_query)
+#OLD TEAM QUERY
+#@app.route('/teams_charts/<query_type>')
+#def teams_charts(query_type):
+#    chart_query = db.session.query(func.avg(getattr(stats, query_type)).label("total"), teams.team_name).join(teams).filter((teams.team_id == stats.team_id)).filter(getattr(stats, query_type) > 0).group_by(teams.team_name)
+#    return render_template('teams_charts.html', chart_query = chart_query)
+
 
 @app.route('/grounds_charts/<query_type>/<min_year>/<max_year>')
 def grounds_charts(query_type,min_year,max_year):
@@ -29,9 +35,12 @@ def grounds_charts(query_type,min_year,max_year):
     chart_query = db.session.query(func.avg(getattr(stats, query_type)).label("total"), venues.venue_name).join(games, venues).filter((games.game_id == stats.game_id)).filter(getattr(stats, query_type) > 0).filter(games.date >= min_year).filter(games.date <= max_year).group_by(venues.venue_name)
     return render_template('grounds_charts.html', chart_query = chart_query)
 
-@app.route('/teams_charts/<query_type>')
-def teams_charts(query_type):
-    chart_query = db.session.query(func.avg(getattr(stats, query_type)).label("total"), teams.team_name).join(teams).filter((teams.team_id == stats.team_id)).filter(getattr(stats, query_type) > 0).group_by(teams.team_name)
+@app.route('/teams_charts/<query_type>/<min_year>/<max_year>')
+def teams_charts(query_type,min_year,max_year):
+    min_year = min_year + '-01-01'
+    max_year = max_year + '-12-12'
+    chart_query = db.session.query(func.avg(getattr(stats, query_type)).label("total"), teams.team_name).join(teams, games.game_id==stats.game_id).filter((teams.team_id == stats.team_id)).filter(getattr(stats, query_type) > 0).filter(games.date >= min_year).filter(games.date <= max_year).group_by(teams.team_name)
+    #chart_query = db.session.query(func.avg(getattr(stats, query_type)).label("total"), teams.team_name).join(teams).filter((teams.team_id == stats.team_id)).filter(getattr(stats, query_type) > 0).group_by(teams.team_name)
     return render_template('teams_charts.html', chart_query = chart_query)
 
 @app.route('/year_charts/<query_type>')
