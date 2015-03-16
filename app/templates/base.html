@@ -23,8 +23,7 @@
         <div id="navbar" class="navbar-collapse collapse">
           <ul class="nav navbar-nav">
             <li class="active"><a href="\">Home</a></li>
-            <li><a href="#about">About</a></li>
-            <li><a href="#contact">Contact</a></li>
+            <li><a href="mailto://df.myjunk@gmail.com">Contact</a></li>
 
              <li class="dropdown">
               <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Stats by Team<span class="caret"></span></a>
@@ -64,10 +63,6 @@
                 <li><a href="{{ url_for('grounds_charts', query_type='inside_50s', min_year='1987', max_year='2014') }}">Inside 50s</a></li>
                 <li><a href="{{ url_for('grounds_charts', query_type='in50s_score', min_year='1987', max_year='2014') }}">Inside 50s score</a></li>
                 <li><a href="{{ url_for('grounds_charts', query_type='in50s_goal', min_year='1987', max_year='2014') }}">Inside 50s goal</a></li>
-                <li class="divider"></li>
-                <li class="dropdown-header">Nav header</li>
-                <li><a href="#">Separated link</a></li>
-                <li><a href="#">One more separated link</a></li>
               </ul>
             </li>
             <li class="dropdown">
@@ -86,8 +81,10 @@
                 <li><a href="{{ url_for('year_charts', query_type='behinds_rushed') }}">Behinds rushed</a></li>
                 <li><a href="{{ url_for('year_charts', query_type='scoring_shots') }}">Scoring shots</a></li>
                 <li><a href="{{ url_for('year_charts', query_type='inside_50s') }}">Inside 50s</a></li>
+                <!--
                 <li><a href="{{ url_for('year_charts', query_type='in50s_score') }}">Inside 50s score</a></li>
                 <li><a href="{{ url_for('year_charts', query_type='in50s_goal') }}">Inside 50s goal</a></li>
+                 -->
               </ul>
           </ul>
         </div><!--/.nav-collapse -->
